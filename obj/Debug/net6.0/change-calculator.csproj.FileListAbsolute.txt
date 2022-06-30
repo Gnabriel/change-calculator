@@ -1,0 +1,15 @@
+/home/gabe/github/change-calculator/bin/Debug/net6.0/change-calculator
+/home/gabe/github/change-calculator/bin/Debug/net6.0/change-calculator.deps.json
+/home/gabe/github/change-calculator/bin/Debug/net6.0/change-calculator.runtimeconfig.json
+/home/gabe/github/change-calculator/bin/Debug/net6.0/change-calculator.dll
+/home/gabe/github/change-calculator/bin/Debug/net6.0/change-calculator.pdb
+/home/gabe/github/change-calculator/obj/Debug/net6.0/change-calculator.csproj.AssemblyReference.cache
+/home/gabe/github/change-calculator/obj/Debug/net6.0/change-calculator.GeneratedMSBuildEditorConfig.editorconfig
+/home/gabe/github/change-calculator/obj/Debug/net6.0/change-calculator.AssemblyInfoInputs.cache
+/home/gabe/github/change-calculator/obj/Debug/net6.0/change-calculator.AssemblyInfo.cs
+/home/gabe/github/change-calculator/obj/Debug/net6.0/change-calculator.csproj.CoreCompileInputs.cache
+/home/gabe/github/change-calculator/obj/Debug/net6.0/change-calculator.dll
+/home/gabe/github/change-calculator/obj/Debug/net6.0/refint/change-calculator.dll
+/home/gabe/github/change-calculator/obj/Debug/net6.0/change-calculator.pdb
+/home/gabe/github/change-calculator/obj/Debug/net6.0/change-calculator.genruntimeconfig.cache
+/home/gabe/github/change-calculator/obj/Debug/net6.0/ref/change-calculator.dll
