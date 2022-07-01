@@ -1,5 +1,7 @@
 ﻿// Author: Gabriel Ellebrink, gabell-2@student.ltu.se, L0002B, Uppgift 1 Console-variant
 
+using System.Text;
+
 namespace ChangeCalculatorConsole
 {
   // Class that is used to track number of bills and coins.
@@ -16,6 +18,20 @@ namespace ChangeCalculatorConsole
     public int num10s = 0;
     public int num5s = 0;
     public int num1s = 0;
+
+    // Creates a formatted string with the number of bills and coins.
+    public String toString()
+    {
+      return $@"
+      Number of 500 kr bills: {num500s}
+      Number of 200 kr bills: {num200s}
+      Number of 100 kr bills: {num100s}
+      Number of 50 kr bills:  {num50s}
+      Number of 20 kr bills:  {num20s}
+      Number of 10 kr coins:  {num10s}
+      Number of 5 kr coins:   {num5s}
+      Number of 1 kr coins:   {num1s}";  
+    }
   }
 
   // Calculator class that contains the logic to calculate the change.
@@ -28,25 +44,18 @@ namespace ChangeCalculatorConsole
       {
         return double.NaN;
       }
-      return cost-paidAmount;
+      return paidAmount-cost;
     }
 
     // Converts an amount to a number of different bills and coins.
     // Returns a CashBook object.
     public static CashBook amountToCash(double amount)
     {
-      // Verify that amount is valid.
-      if (amount < 0)
-      {
-        return null;
-      }
-
-      CashBook cashBook = new CashBook();
+      CashBook cashBook = new();
 
       // Possible bill or coin values, sorted high to low.
-      int[] cashValues = new int[500, 200, 100, 50, 20, 10, 5, 1];
+      int[] cashValues = new int[] { 500, 200, 100, 50, 20, 10, 5, 1 };
 
-      int i = 0;
       foreach (int cashValue in cashValues)
       {
         while (amount >= cashValue)
@@ -85,6 +94,7 @@ namespace ChangeCalculatorConsole
           amount -= cashValue;
         }
       }
+
       return cashBook;
     }
   }
@@ -93,12 +103,15 @@ namespace ChangeCalculatorConsole
   {
     static void Main(string[] args)
     {
-      bool endApp = false;
-      // Display title.
-      Console.WriteLine("Console Calculator in C#\r");
-      Console.WriteLine("------------------------\n");
+      bool quit = false;
 
-      while (!endApp)
+      // Print welcome info.
+      Console.WriteLine("-----------------------------------------\n");
+      Console.WriteLine("--- Welcome to the Change Calculator! ---\n");
+      Console.WriteLine("--- Made by: Gabriel Ellebrink ----------\n");
+      Console.WriteLine("-----------------------------------------\n");
+
+      while (!quit)
       {
         string costInput = "";
         string paidInput = "";
@@ -107,55 +120,49 @@ namespace ChangeCalculatorConsole
         Console.Write("What is the cost? ");
         costInput = Console.ReadLine();
 
-        double costNum = 0;
-        while (!double.TryParse(numInput1, out cleanNum1))
+        double costNum = -1;
+        // Convert input to a number, or ask again if invalid.
+        while (!double.TryParse(costInput, out costNum) || costNum < 0)
         {
-            Console.Write("This is not valid input. Please enter an integer value: ");
-            numInput1 = Console.ReadLine();
+          Console.Write("Invalid input. Please enter a positive number: ");
+          costInput = Console.ReadLine();
         }
 
-        // Ask the user to type the second number.
-        Console.Write("Type another number, and then press Enter: ");
-        numInput2 = Console.ReadLine();
+        // Ask user to provide the amount paid.
+        Console.Write("How much was paid? ");
+        paidInput = Console.ReadLine();
 
-        double cleanNum2 = 0;
-        while (!double.TryParse(numInput2, out cleanNum2))
+        double changeAmount = Double.NaN;
+        double paidNum = -1;
+
+        // Calculate the change amount.
+        while (Double.IsNaN(changeAmount))
         {
-            Console.Write("This is not valid input. Please enter an integer value: ");
-            numInput2 = Console.ReadLine();
+          // Convert input to a number, or ask again if invalid.
+          while (!double.TryParse(paidInput, out paidNum) || paidNum < costNum)
+          {
+            Console.Write("Invalid input. Please enter a number above or equal to the cost: ");
+            paidInput = Console.ReadLine();
+          }
+          changeAmount = Calculator.getChange(cost: costNum, paidAmount: paidNum);
         }
 
-        // Ask the user to choose an operator.
-        Console.WriteLine("Choose an operator from the following list:");
-        Console.WriteLine("\ta - Add");
-        Console.WriteLine("\ts - Subtract");
-        Console.WriteLine("\tm - Multiply");
-        Console.WriteLine("\td - Divide");
-        Console.Write("Your option? ");
+        // Get a CashBook object containing number of bills and coins.
+        CashBook cashBook = Calculator.amountToCash(amount: changeAmount);
 
-        string op = Console.ReadLine();
+        // Print the change.
+        Console.WriteLine("---");
+        Console.WriteLine("Change:");
+        Console.WriteLine(cashBook.toString());
+        Console.WriteLine("---\n");
 
-        try
+        // Ask whether to quit or run again.
+        Console.Write("Write 'q' to quit, or any other key to restart: ");
+        if (Console.ReadLine() == "q")
         {
-            result = Calculator.DoOperation(cleanNum1, cleanNum2, op);
-            if (double.IsNaN(result))
-            {
-                Console.WriteLine("This operation will result in a mathematical error.\n");
-            }
-            else Console.WriteLine("Your result: {0:0.##}\n", result);
+          quit = true;
         }
-        catch (Exception e)
-        {
-            Console.WriteLine("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
-        }
-
-        Console.WriteLine("------------------------\n");
-
-        // Wait for the user to respond before closing.
-        Console.Write("Press 'n' and Enter to close the app, or press any other key and Enter to continue: ");
-        if (Console.ReadLine() == "n") endApp = true;
-
-        Console.WriteLine("\n"); // Friendly linespacing.
+        Console.WriteLine("\n");
       }
       return;
     }
