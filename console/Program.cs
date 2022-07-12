@@ -17,20 +17,53 @@ namespace ChangeCalculatorConsole
     // Coins.
     public int num10s = 0;
     public int num5s = 0;
-    public int num1s = 0;
+    public int num1s = 0;  
+
 
     // Creates a formatted string with the number of bills and coins.
     public String toString()
     {
-      return $@"
-      Number of 500 kr bills: {num500s}
-      Number of 200 kr bills: {num200s}
-      Number of 100 kr bills: {num100s}
-      Number of 50 kr bills:  {num50s}
-      Number of 20 kr bills:  {num20s}
-      Number of 10 kr coins:  {num10s}
-      Number of 5 kr coins:   {num5s}
-      Number of 1 kr coins:   {num1s}";  
+      string result = "";
+
+      if (num500s > 0)
+      {
+        result += $"Number of 500 kr bills: {num500s} \n";
+      }
+      if (num200s > 0)
+      {
+        result += $"Number of 200 kr bills: {num200s} \n";
+      }
+      if (num100s > 0)
+      {
+        result += $"Number of 100 kr bills: {num100s} \n";
+      }
+      if (num50s > 0)
+      {
+        result += $"Number of 50 kr bills:  {num50s} \n";
+      }
+      if (num20s > 0)
+      {
+        result += $"Number of 20 kr bills:  {num20s} \n";
+      }
+      if (num10s > 0)
+      {
+        result += $"Number of 10 kr coins:  {num10s} \n";
+      }
+      if (num5s > 0)
+      {
+        result += $"Number of 5 kr coins:   {num5s} \n";
+      }
+      if (num1s > 0)
+      {
+        result += $"Number of 1 kr coins:   {num1s} \n";
+      }
+
+      if (result == "")
+      {
+        return "No change.";
+      }
+
+      return result;
     }
   }
 
